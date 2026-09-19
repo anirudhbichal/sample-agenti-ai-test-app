@@ -15,6 +15,11 @@ class Message(MessageCreate):
 	id: int
 
 
+class TextLength(BaseModel):
+	text: str
+	length: int
+
+
 messages: List[Message] = []
 next_id = 1
 
@@ -22,6 +27,16 @@ next_id = 1
 @app.get("/")
 def root():
 	return {"message": "Message Processor API is running"}
+
+
+@app.get("/length", response_model=TextLength)
+def get_text_length(text: str):
+	return TextLength(text=text, length=len(text))
+
+
+@app.post("/length", response_model=TextLength)
+def post_text_length(message_data: MessageCreate):
+	return TextLength(text=message_data.content, length=len(message_data.content))
 
 
 @app.get("/messages", response_model=List[Message])
