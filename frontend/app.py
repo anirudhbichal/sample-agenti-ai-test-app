@@ -7,7 +7,7 @@ message = st.text_input("Enter a message:")
 
 if st.button("Submit"):
     response = requests.post(
-        "http://localhost:8000/length",
+        "http://backend:8000/length",
         json={"content": message},
         timeout=5,
     )
